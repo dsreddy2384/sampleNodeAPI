@@ -120,5 +120,37 @@ module.exports = {
         console.log(err);
     }
       
+    },
+    saveEmployee(employee) {
+        try {
+            return new Promise(function (resolve, reject) {
+                pool.getConnection(function (err, connection) {
+                    try{
+                    if (err)
+                        return reject(err);
+                 connection.query('insert into employees values (?,?,?,?,?,?)' ,[employee.id, employee.birthDate, employee.firstName, employee.lastName, employee.gender, employee.hireDate]).then (function (result) {
+                            console.log('record inserted : ')
+                            resolve("Success");
+                    }).catch(function(err){
+                        console.log('Error while performing Query.');
+                        reject(err);
+                    });
+                    }
+                    catch(err){
+                        console.log(err);
+                        if(err)
+                            reject(err);
+                    };
+                        connection.release();
+
+                    
+                });
+            });
+
+        } catch (err) {
+            reject(err);
+            console.log(err);
+        }
+
     }
   }

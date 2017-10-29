@@ -1,0 +1,222 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is sample API's.",
+    "version": "1.0.0",
+    "title": "Swagger App",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "gcmpocapp.appspot.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "employees",
+      "description": "Everything about your Employees",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/employees": {
+      "post": {
+        "tags": [
+          "employees"
+        ],
+        "summary": "Add a new employees",
+        "description": "",
+        "operationId": "addEmployee",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Employee object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/employee"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/employees/{empNo}": {
+      "get": {
+        "tags": [
+          "employees"
+        ],
+        "summary": "Finds employees by Id",
+        "description": "Multiple status values can be provided with comma separated strings",
+        "operationId": "findPetsByStatus",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "empNo",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the user to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/employee"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    },
+    "/employees/name/{name}": {
+      "get": {
+        "tags": [
+          "employees"
+        ],
+        "summary": "Finds employees by name",
+        "operationId": "findEmployeesByName",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Enter the employee name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/employee"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "employee": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+
+        },
+        "birthDate": {
+          "type": "string",
+          "minLength": "1",
+          "maxLength": "13"
+        },
+        "firstName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "lastName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "gender": {
+          "type": "string",
+          "description": "gender",
+          "enum": [
+            "M",
+            "F"
+          ]
+        },
+        "hire_date": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 13
+        }
+      },
+      "required":["id","birthDate","firstName","lastName","gender","hireDate"],
+      "xml": {
+        "name": "employee"
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Category"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
